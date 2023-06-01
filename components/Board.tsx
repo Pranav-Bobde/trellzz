@@ -7,11 +7,14 @@ import Column from './Column';
 type Props = {};
 
 export default function Board({}: Props) {
-  const [board, getBoard, setBoardState] = useBoardStore((state) => [
-    state.board,
-    state.getBoard,
-    state.setBoardState,
-  ]);
+  const [board, getBoard, setBoardState, updateTodoInDB] = useBoardStore(
+    (state) => [
+      state.board,
+      state.getBoard,
+      state.setBoardState,
+      state.updateTodoInDB,
+    ]
+  );
 
   useEffect(() => {
     getBoard();
@@ -81,6 +84,8 @@ export default function Board({}: Props) {
         id: finishCol.id,
         todos: finishedTodos,
       });
+
+      updateTodoInDB(todoMoved, finishCol.id);
 
       setBoardState({ ...board, columns: newColumns });
     }
