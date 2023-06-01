@@ -2,10 +2,16 @@
 import Image from 'next/image';
 import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import Avatar from 'react-avatar';
+import { useBoardStore } from '@/stores/BoardStore';
 
 type Props = {};
 
 export default function Header({}: Props) {
+  const [searchString, setSearchString] = useBoardStore((state) => [
+    state.searchString,
+    state.setSearchString,
+  ]);
+
   return (
     <header>
       <div className="flex flex-col items-center rounded-b-2xl bg-gray-500/10 p-5 md:flex-row">
@@ -43,6 +49,8 @@ export default function Header({}: Props) {
             <input
               type="text"
               placeholder="Search"
+              value={searchString}
+              onChange={(e) => setSearchString(e.target.value)}
               className="flex-1 p-2 outline-none"
             />
             <button type="submit" hidden>
