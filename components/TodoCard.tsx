@@ -1,10 +1,13 @@
 'use client';
-import { useBoardStore } from '@/stores/BoardStore';
-import { XCircleIcon } from '@heroicons/react/24/solid';
 import {
   DraggableProvidedDragHandleProps,
   DraggableProvidedDraggableProps,
 } from 'react-beautiful-dnd';
+import { useBoardStore } from '@/stores/BoardStore';
+import { XCircleIcon } from '@heroicons/react/24/solid';
+import { useEffect, useState } from 'react';
+import getUrl from '@/lib/getUrl';
+import Image from 'next/image';
 
 type Props = {
   id: TypedColumn;
@@ -24,6 +27,18 @@ export default function TodoCard({
   dragHandleProps,
 }: Props) {
   const deleteTodo = useBoardStore((state) => state.deleteTodo);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      const url = await getUrl(todo.image!);
+      if (url) {
+        setImageUrl(url.toString());
+      }
+    };
+
+    fetchImage();
+  }, [todo]);
 
   return (
     <div
@@ -41,6 +56,18 @@ export default function TodoCard({
           <XCircleIcon className="ml-5 h-8 w-8" />
         </button>
       </div>
+
+      {imageUrl && (
+        <div className="relative h-full w-full rounded-b-md">
+          <Image
+            src={imageUrl}
+            alt="Todo Image"
+            width={400}
+            height={200}
+            className="w-full rounded-b-md object-contain"
+          />
+        </div>
+      )}
     </div>
   );
 }
