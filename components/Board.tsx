@@ -96,7 +96,7 @@ export default function Board({}: Props) {
       <Droppable droppableId="board" direction="horizontal" type="column">
         {(provided) => (
           <div
-            className="mx-auto grid max-w-7xl grid-cols-1 gap-5 md:grid-cols-3"
+            className="mx-auto grid max-w-7xl grid-cols-1 gap-5 md:grid-cols-3 mt-6"
             {...provided.droppableProps}
             ref={provided.innerRef}
           >

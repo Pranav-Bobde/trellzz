@@ -81,7 +81,6 @@ export default function Modal() {
                   />
                 </div>
                 <TaskTypeRadioGroup />
-                Image: {image ? image.name : 'None'}
                 <div className="mt-2">
                   <button
                     type="button"
